@@ -1,4 +1,5 @@
 
+# COBRA: Feature selection Toolkit
 
 To run this program you can follow these steps: first need to install mi library and Yalmip in MATLAB. 
 
@@ -16,4 +17,3 @@ PS: This final version of COBRA is a bit different than what discussed in the pa
 Strategy for Feature Selection with Mutual Information Measure). I found it a bit easier and faster to work with. In this variation, the number of features, i.e. P do not need to be passed as an input to COBRA. Instead, a parameter called beta which is a penalization factor should be set. It somehow controls the ratio between sum of class-dependent terms (I(X_i;C)) and inter-feature mutual information terms ( I(X_i;X_j) ). If not given, the program takes care of it and sets it to a value such that the ratio between sum of class-dependent terms (I(X_i;C)) and inter-feature mutual information terms ( I(X_i;X_j) ) becomes 1.
 
 
-# COBRA
