@@ -1,0 +1,32 @@
+%first we need to load the dataset
+dbw= dlmread('dbw_filter_500.data',',');
+%extract class labels
+C=dbw(:,1);
+%extract variables
+X=dbw(:,2:501);
+%construct the mutual information matrix mRMR and JMI
+Q_mrmr=Q_const(X,C);
+Q_jmi=Q_const(X,C,0);
+%%
+%Using forward and backward selection over Q_mrmr and Q_jmi
+S_fmrmr=forward_selection(Q_mrmr);
+S_bmrmr=backward_elimination(Q_mrmr);
+%%
+S_fjmi=forward_selection(Q_jmi);
+S_bjmi=backward_elimination(Q_jmi);
+%%
+[S_mcobra,~,ss]=cobra_machine(Q_mrmr)
+%%
+%train a decision tree to evaluate the quality of the features
+acc=0;
+X_tr=X(:,S_mcobra);
+for i = 1 : size(X_tr,1)
+    ind=1:size(X_tr,1);
+    ind=ind(ind~=i);
+tree = fitctree(X_tr(ind,:),C(ind));
+label = predict(tree,X_tr(i,:) );
+ acc =( label==C(i) ) + acc;
+end
+acc=acc/ size(X_tr,1)
+
+
